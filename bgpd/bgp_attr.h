@@ -399,7 +399,8 @@ extern bgp_size_t bgp_packet_attribute(struct bgp *bgp, struct peer *peer, struc
 				       struct prefix *p, afi_t afi, safi_t safi, struct peer *from,
 				       struct prefix_rd *prd, mpls_label_t *label,
 				       uint8_t num_labels, bool addpath_capable,
-				       uint32_t addpath_tx_id, struct bgp_path_info *bpi);
+				       uint32_t addpath_tx_id, struct bgp_path_info *bpi,
+				       bool for_bmp);
 extern void bgp_dump_routes_attr(struct stream *s, struct bgp_path_info *bpi,
 				 const struct prefix *p);
 extern bool attrhash_cmp(const void *arg1, const void *arg2);
