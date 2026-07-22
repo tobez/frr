@@ -17,14 +17,17 @@
 #ifdef GNU_LINUX
 #include <linux/filter.h>
 #include <linux/seg6.h>
-#include <linux/ipv6.h>
 #endif
 
 #ifdef BFD_LINUX
 #include <linux/if_packet.h>
 #include <linux/seg6.h>
-#include <linux/ipv6.h>
 #endif /* BFD_LINUX */
+
+/* el7 kernel headers: linux/ipv6.h clashes with netinet/in.h and lacks SRH type 4 */
+#ifndef IPV6_SRCRT_TYPE_4
+#define IPV6_SRCRT_TYPE_4 4
+#endif
 
 #include <netinet/if_ether.h>
 #include <netinet/udp.h>
@@ -626,6 +629,11 @@ ssize_t bfd_recv_ipv4(int sd, uint8_t *msgbuf, size_t msgbuflen, uint8_t *ttl,
 			break;
 		}
 #endif /* BFD_LINUX */
+
+/* el7 kernel headers: linux/ipv6.h clashes with netinet/in.h and lacks SRH type 4 */
+#ifndef IPV6_SRCRT_TYPE_4
+#define IPV6_SRCRT_TYPE_4 4
+#endif
 #ifdef BFD_BSD
 		case IP_RECVTTL: {
 			memcpy(ttl, CMSG_DATA(cm), sizeof(*ttl));
@@ -1393,6 +1401,11 @@ static void bp_set_ipopts(int sd)
 		zlog_fatal("set-ipopts: setsockopt(IP_PKTINFO, %d): %s",
 			   pktinfo, strerror(errno));
 #endif /* BFD_LINUX */
+
+/* el7 kernel headers: linux/ipv6.h clashes with netinet/in.h and lacks SRH type 4 */
+#ifndef IPV6_SRCRT_TYPE_4
+#define IPV6_SRCRT_TYPE_4 4
+#endif
 #ifdef BFD_BSD
 	int yes = 1;
 
