@@ -808,12 +808,7 @@ fi
 %if 0%{?rhel} > 7 || 0%{?fedora} > 29
 %{_sbindir}/__pycache__/*
 %else
-%{_sbindir}/generate_support_bundle.pyc
-%{_sbindir}/generate_support_bundle.pyo
-%{_sbindir}/frr-reload.pyc
-%{_sbindir}/frr-reload.pyo
-%{_sbindir}/frr_babeltrace.pyc
-%{_sbindir}/frr_babeltrace.pyo
+%{_sbindir}/__pycache__/*
 %endif
 
 
