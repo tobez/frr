@@ -140,6 +140,20 @@ class PathAttrMultiExitDisc:
 
 
 # ------------------------------------------------------------------------------
+@PathAttribute.register_path_attr(PATH_ATTR_TYPE_COMMUNITIES)
+class PathAttrCommunities:
+    @classmethod
+    def dissect(cls, data):
+        communities = []
+        while len(data) >= 4:
+            (asn, value) = struct.unpack_from("!HH", data)
+            communities.append(f"{asn}:{value}")
+            data = data[4:]
+
+        return {"communities": " ".join(communities)}
+
+
+# ------------------------------------------------------------------------------
 @PathAttribute.register_path_attr(PATH_ATTR_TYPE_MP_REACH_NLRI)
 class PathAttrMpReachNLRI:
     """
